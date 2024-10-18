@@ -11,11 +11,11 @@ check_and_install_packages <- function(pkg) {
 }
 
 # List of required packages
-required_packages <- c("dplyr", "purrr", "ggplot2")
+required_packages <- c("dplyr", "purrr", "ggplot2", "survival", "clustermq")
 
+                      
 # Check and install missing packages
 check_and_install_packages(required_packages)
-
 
 
 
