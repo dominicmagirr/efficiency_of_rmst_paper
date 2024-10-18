@@ -1,4 +1,9 @@
 ###########################
+library(ggsurvfit)
+library(flexsurv)
+library(survRM2)
+library(dplyr)
+
 load("data/CLEOPATRA_2A.rda")
 dat <- CLEOPATRA_2A
 survfit(Surv(time, event) ~ arm, data = dat) |> plot(col=1:2)

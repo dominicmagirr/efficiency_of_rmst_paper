@@ -1,13 +1,20 @@
 #-------------------------------------------------------------
-# Load libraries for plotting
+# Load required libraries, checking if installed first
 #-------------------------------------------------------------
-library(ggplot2)
-library(dplyr)
-library(purrr)
+check_and_install_packages <- function(pkg) {
+  new_pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new_pkg)) {
+    install.packages(new_pkg)
+  }
+  invisible(lapply(pkg, library, character.only = TRUE))
+}
+
+required_packages <- c("dplyr", "purrr", "ggplot2")
+check_and_install_packages(required_packages)
+
 
 #-------------------------------------------------------------
-# Main function for plotting weight functions for 
-# the simulation scenarios
+# Main function for plotting weight functions for simulation scenarios
 #-------------------------------------------------------------
 plot_weight_f <- function(s_1 = 0.9, rec_period = 0.001, hr = 0.67, max_t = 3.001, tau_target = 3) {
   
@@ -103,16 +110,22 @@ weight_function_plot <-
   ggplot(data = p_res, mapping = aes(x = Time, y = Weight, linetype = Test)) +
   geom_line() +
   facet_wrap(event_rate ~ rec_rate, scales = "free") +
-  theme_bw() +
+#  theme_bw() +
+  theme_minimal() +
   labs(x = "Time", y = "Weight", linetype = "Test") +
-  theme(legend.position = "bottom")
+  theme(legend.position = "right")
 
 #-------------------------------------------------------------
 # Save the plot as a high-resolution PNG file
+# Check if the "figs/" directory exists and create it if not
 #-------------------------------------------------------------
-ggsave("figs/weight_functions.png", 
+if (!dir.exists("figs")) {
+  dir.create("figs")
+}
+
+ggsave("figs/weight_functions.pdf", 
        weight_function_plot, 
        width = 10, 
-       height = 6, 
+       height = 9, 
        units = "in", 
        dpi = 300)
