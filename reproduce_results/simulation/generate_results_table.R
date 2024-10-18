@@ -6,7 +6,7 @@ library(gt)
 
 # read in simulations results csv file and store as final_results
 # change if simulation results change
-final_results <- read_csv("results/simulation_results_seed_32624_20241018.csv")
+final_results <- read_csv("results/simulation_results.csv")
 
 final_results_wide <- final_results |>
   pivot_wider(
@@ -19,7 +19,7 @@ final_results_wide <- final_results |>
 
 publication_table <- final_results_wide |>
   select(-frac_post_tau) |>
-  gt() |>
+  gt(groupname_col = 'event_rate') |>
   tab_header(
     title = "Simulation Results",
     subtitle = "Power and Relative Efficiency Across Different Scenarios"
