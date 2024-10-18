@@ -1,8 +1,12 @@
+#--------------------------------------------------------
+# load required packages and helper functions
 library(survival)
+library(clustermq)
 source("src/sim_helper_fns.R")
 source("src/survRM2_fns.R")
 
-## Global Configuration
+#--------------------------------------------------------
+# Global Configuration for simulations
 N_runs <- 1e4
 n_jobs <- 200
 random_seed <- 32624
@@ -11,6 +15,9 @@ set.seed(random_seed)
 ## store to capture run date and time
 current_date <- format(Sys.Date(), "%Y%m%d")
 
+#--------------------------------------------------------
+# Simulation scenario metadata
+
 global_params <- list(
   event_rates = c("Low" = 0.9, "Moderate" = 0.6, "High" = 0.2),
   recruitment_speeds = c("Instant" = 0.0001, "Fast" = 0.5, "Moderate" = 1.5, "Slow" = 2.5),
@@ -18,8 +25,10 @@ global_params <- list(
   sample_sizes = c("Low" = 1000, "Moderate" = 250, "High" = 150)
 )
 
+#--------------------------------------------------------
+# additional simulation functions 
 
-## Function Definitions
+# Post simulation processing of metrics 
 post_sim <- function(res){
   pow_rmst <- mean(res$z_rmst > qnorm(0.975))
   pow_ph <- mean(res$z_cox < qnorm(0.025))
@@ -81,20 +90,23 @@ collect_results <- function(){
   return(final_results)
 }
 
+
+#--------------------------------------------------------
 ## Run Simulations and Collect Results
 final_results <- collect_results()
 
+#--------------------------------------------------------
 ## Print or Save Results
 print(final_results) # For printing in console
 
+#--------------------------------------------------------
 ## Create Results Directory and Save with Metadata
 results_folder <- "results"
 if (!dir.exists(results_folder)) {
   dir.create(results_folder)
 }
 
+#--------------------------------------------------------
 ## save the final results 
 file_name <- sprintf("%s/simulation_results_seed_%d_%s.csv", results_folder, random_seed, current_date)
 write.csv(final_results, file_name, row.names = FALSE)
-
-
