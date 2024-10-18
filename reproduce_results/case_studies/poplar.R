@@ -1,5 +1,6 @@
 ### get and plot data
 library(dplyr)
+library(ggsurvfit)
 template <- tempfile(fileext = ".xlsx")
 
 httr::GET(url = "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-018-0134-3/MediaObjects/41591_2018_134_MOESM3_ESM.xlsx", 
