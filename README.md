@@ -1,5 +1,4 @@
-# efficiency_of_rmst_paper
-
+# PH & RMST efficiency
 
 ## Description
 
@@ -8,4 +7,10 @@ Code to reproduce all outputs for the paper "Efficiency of nonparametric two-sam
 ## Authors 
 Dominic Magirr (maintainer), Craig Wang, Xinlei Deng, Mark Baillie
 
+## Overview of repository
 
+The repository contains the following folders:
+
+* data/
+* reproduce_results/
+* src/
