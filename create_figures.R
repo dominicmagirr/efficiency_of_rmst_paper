@@ -40,3 +40,9 @@ if (run_simulation) {
 
 # Generate results table
 source("reproduce_results/simulation/generate_results_table.R")
+
+
+#-------------------------------------------------------------
+# Generate case studie KM plots 
+#-------------------------------------------------------------
+source("reproduce_results/case_studies/km_plots_case_studies.R")
