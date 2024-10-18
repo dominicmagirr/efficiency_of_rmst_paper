@@ -54,3 +54,9 @@ publication_table <- final_results_wide |>
 
 # Print the publication-ready table
 print(publication_table)
+
+# Save the publication-ready table as a docx and rtf and .tex
+gtsave(publication_table, "figs/simulation_results.docx")
+gtsave(publication_table, "figs/simulation_results.rtf")
+gtsave(publication_table, "figs/simulation_results.tex")
+
