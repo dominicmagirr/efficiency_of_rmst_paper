@@ -1,45 +1,33 @@
-###########################
-library(ggsurvfit)
+library(survival)
 library(flexsurv)
-library(survRM2)
-library(dplyr)
+library(ggsurvfit)
+source("src/survRM2_fns.R")
 
-load("data/CLEOPATRA_2A.rda")
-dat <- CLEOPATRA_2A
-survfit(Surv(time, event) ~ arm, data = dat) |> plot(col=1:2)
-dat$arm <- factor(ifelse(dat$arm == "control", "control", "experimental"))
-
-## plot
-
-p_2 <- survfit2(Surv(time, event) ~ arm, data = dat) |> 
-  ggsurvfit() +
-  add_censor_mark() +
-  add_confidence_interval() +
-  add_quantile() +
-  add_risktable()
+dat <- read.csv("data/sustain_ipd.csv")
+dat$arm <- factor(ifelse(dat$arm == 1, "control", "experimental"))
 
 
 ## assess ph
-
 fit_spline <- flexsurvspline(Surv(time, event) ~ arm +
                                gamma1(arm) +
                                gamma2(arm),
                              data = dat, k = 4, scale = "hazard")
 
 par(mfrow = c(2,2))
-plot(fit_spline, type = "survival", ci = FALSE, col = c(2,4), ylim = c(0, 1), xlab = "Time", ylab = "Survival", main = "(A)")
-legend("bottomleft", c("Control", "Experimental"), col = c(2,4), lty = c(1,1))
+plot(fit_spline, type = "survival", ci = FALSE, col = c(2,4), ylim = c(0.9, 1), xlab = "Time", ylab = "Survival", main = "(A)")
+legend("bottomleft", c("Control","Experimental"), col = c(2,4), lty = c(1,1))
 plot(fit_spline, type = "cumhaz", ci = TRUE, col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(B)")
-plot(fit_spline, type = "cumhaz", log = "xy", col = c(2,4), xlim = c(5, 70), xlab = "Time", ylab = "Cumulative Hazard", main = "(C)")
+plot(fit_spline, type = "cumhaz", log = "xy", xlim = c(10, 109), col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(C)")
 
+    
 ## conf int for hazard ratio
 ## simulate from MVN distribution
 sims <- normboot.flexsurvreg(fit_spline, 
                              B = 1e5, 
                              raw = TRUE)
 
-res_mat <- matrix(0, nrow = 70, ncol = 3)
-for (i in 1:70){
+res_mat <- matrix(0, nrow = 109, ncol = 3)
+for (i in 1:109){
   ## hazard
   h_c <-  hsurvspline(i, gamma = sims[,c("gamma0", 
                                          "gamma1", 
@@ -64,24 +52,20 @@ for (i in 1:70){
   res_mat[i,] <- quantile(hr, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
 }
 
-plot(1:70, res_mat[,2], type = "l", ylim = c(0.3,1.5), xlim = c(5, 70),
+plot(1:109, res_mat[,2], type = "l", ylim = c(0.3,1.5), xlim = c(5, 109),
      xlab = "Time", ylab = "Hazard Ratio", main = "(D)")
-points(1:70, res_mat[,1],type = "l", lty = 2)
-points(1:70, res_mat[,3],type = "l", lty = 2)
+points(1:109, res_mat[,1],type = "l", lty = 2)
+points(1:109, res_mat[,3],type = "l", lty = 2)
+abline(h = 0.7373, col = 1, lty = 3)
 
-
-abline(h = 0.6767, col = 1, lty = 3)
-
-
-## coxph vs rmst
-dat$arm2 <- ifelse(dat$arm == "control", 0, 1)
+## Cox vs RMST
 coxph(Surv(time, event) ~ arm, data = dat) |> summary()
+
+dat$arm2 <- ifelse(dat$arm == "control", 0, 1)
 res_rmst <- rmst2(time = dat$time,
                   status = dat$event,
                   arm = dat$arm2,
-                  tau = 65)
-
-sum(dat$time > 65 & dat$event == 1) / sum(dat$event)
+                  tau = 108)
 
 
 rmst_est <- res_rmst$unadjusted.result[1,1]
@@ -91,17 +75,20 @@ z_rmst <- rmst_est / rmst_se
 rmst_est
 z_rmst
 
-####################################################
-## score plots
 
+sum(dat$time > 108 & dat$event == 1) / sum(dat$event)
+
+###########################################################
+## score plots
 library(nphRCT)
+library(dplyr)
 df_lr <- find_scores(formula=Surv(time, event) ~ arm, data=dat, method = "lr")
 
 df_lr <- df_lr$df %>% 
   mutate(label = "Log-rank", time = t_j) %>% 
   dplyr::select(c(time, event, group, standardized_score, label))
 
-df_rmst <- find_scores(formula=Surv(time, event) ~ arm, tau=65, data=dat, method = "rmst")
+df_rmst <- find_scores(formula=Surv(time, event) ~ arm, tau=108, data=dat, method = "rmst")
 
 df_rmst <- df_rmst$df %>% 
   mutate(label = "KM RMST", time = t_j) %>% 
@@ -112,7 +99,7 @@ df_rmst <- df_rmst$df %>%
 rmst_comp = rbind(df_lr,
                   df_rmst) %>%
   mutate(type = ifelse(event == 1, "Event", "Censored"),
-         example = "(B)")
+         example = "(A)")
 
 
 # re-order
@@ -129,11 +116,9 @@ p_rmst_comp = ggplot() +
   labs(color = "Arm", alpha = "Observation type") +
   geom_hline(data = rmst_comp %>% group_by(group, label) %>% dplyr::summarize(mean_score = mean(standardized_score)), 
              aes(yintercept = mean_score, colour = group), linetype = 2) +
-  facet_wrap(example ~ label, scales = "free_x")
+  facet_grid(example ~ label)
 
 p_rmst_comp
 
 
-rmst_comp_B <- rmst_comp
-
-
+rmst_comp_A <- rmst_comp
