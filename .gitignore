@@ -4,3 +4,4 @@
 .Ruserdata
 *.html
 /local_lib/
+scratch.R
