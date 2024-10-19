@@ -2,8 +2,7 @@
 # Load required libraries
 #-----------------------------------------------
 library(survival)
-library(flexsurv, lib.loc = local_lib)
-library(ggsurvfit)
+library(flexsurv, lib.loc = "local_lib") # Load the specific version of flexsurv
 library(readr)
 library(dplyr)
 library(ggplot2)

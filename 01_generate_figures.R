@@ -89,3 +89,8 @@ source("reproduce_results/case_studies/calc_km_rmst_case_studies.R")
 # Generate case study HR plots
 #-------------------------------------------------------------
 source("reproduce_results/case_studies/plot_hr_case_studies.R")
+
+#-------------------------------------------------------------
+# Generate case study standardised score plots
+#-------------------------------------------------------------
+source("reproduce_results/case_studies/plot_std_scores_case_studies.R")
