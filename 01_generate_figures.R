@@ -1,6 +1,11 @@
-## Produce paper figures
+#--------------------------------------------------
+# Main script to generate paper figures
+#--------------------------------------------------
 
-# Function to check if packages are installed, and install if not
+#--------------------------------------------------
+# Function to check if packages are installed, 
+# and install if not
+#--------------------------------------------------
 check_and_install_packages <- function(pkg) {
   new_pkg <- pkg[!(pkg %in% installed.packages()[,"Package"])]
   if (length(new_pkg)) {
@@ -25,7 +30,6 @@ required_packages <- c(
   "gt"
 )
 
-
 # Check and install missing packages
 check_and_install_packages(required_packages)
 
@@ -39,8 +43,8 @@ source("reproduce_results/weight_functions/weight_functions.R")
 #-------------------------------------------------------------
 run_simulation <- FALSE  # Set to TRUE to run the simulation code
 
+# Run simulations (Warning: this will take time if not on a cluster)
 if (run_simulation) {
-  # Run simulations (Warning: this will take time if not on a cluster)
   source("reproduce_results/simulation/run_rmst_sim_cluster.R")
 } else {
   message("Skipping simulation as 'run_simulation' is set to FALSE.")
@@ -58,6 +62,3 @@ source("reproduce_results/case_studies/plot_km_case_studies.R")
 # Generate case study KM vs RMST table
 #-------------------------------------------------------------
 source("reproduce_results/case_studies/calc_km_rmst_case_studies.R")
-
-
-
