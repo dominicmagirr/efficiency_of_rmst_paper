@@ -52,11 +52,8 @@ publication_table <- final_results_wide |>
     columns = c(pow_rmst_plus, pow_ph_plus, eff_rmst_cox_plus, frac_post_tau_plus)
   )
 
-# Print the publication-ready table
-print(publication_table)
 
-# Save the publication-ready table as a docx and rtf and .tex
-gtsave(publication_table, "figs/simulation_results.docx")
+# Save the publication-ready table as an rtf and .tex
 gtsave(publication_table, "figs/simulation_results.rtf")
 gtsave(publication_table, "figs/simulation_results.tex")
 

@@ -22,6 +22,7 @@ if (!requireNamespace("flexsurv", quietly = TRUE, lib.loc = local_lib)) {
                             repos = "http://cran.us.r-project.org")
 }
 
+
 #--------------------------------------------------
 # Function to check if packages are installed, 
 # and install if not
@@ -43,7 +44,6 @@ required_packages <- c(
   "ggplot2",
   "survival",
   "clustermq",
-  "flexsurv",
   "nphRCT",
   "survRM2",
   "ggsurvfit",
@@ -58,7 +58,7 @@ check_and_install_packages(required_packages)
 #-------------------------------------------------------------
 # Create RMST and PH weight function figure 
 #-------------------------------------------------------------
-source("reproduce_results/weight_functions/weight_functions.R")
+source("reproduce_results/weight_functions/plot_weight_functions.R")
 
 #-------------------------------------------------------------
 # Run simulation scenarios and generate results table (optional)
