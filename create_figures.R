@@ -10,13 +10,21 @@ check_and_install_packages <- function(pkg) {
 }
 
 # List of required packages
-required_packages <- c("dplyr",
-                       "tidyr",
-                       "readr",
-                       "purrr",
-                       "ggplot2",
-                       "survival",
-                       "clustermq")
+required_packages <- c(
+  "dplyr",
+  "tidyr",
+  "readr",
+  "purrr",
+  "ggplot2",
+  "survival",
+  "clustermq",
+  "flexsurv",
+  "nphRCT",
+  "survRM2",
+  "ggsurvfit",
+  "gt"
+)
+
 
 # Check and install missing packages
 check_and_install_packages(required_packages)
@@ -41,8 +49,15 @@ if (run_simulation) {
 # Generate results table
 source("reproduce_results/simulation/generate_results_table.R")
 
+#-------------------------------------------------------------
+# Generate case study KM plots 
+#-------------------------------------------------------------
+source("reproduce_results/case_studies/plot_km_case_studies.R")
 
 #-------------------------------------------------------------
-# Generate case studie KM plots 
+# Generate case study KM vs RMST table
 #-------------------------------------------------------------
-source("reproduce_results/case_studies/km_plots_case_studies.R")
+source("reproduce_results/case_studies/calc_km_rmst_case_studies.R")
+
+
+
