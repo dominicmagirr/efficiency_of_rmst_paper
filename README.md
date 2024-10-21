@@ -1,85 +1,88 @@
 # PH & RMST Efficiency
 
-## Description
+## Overview
 
-This repository contains code to reproduce all outputs for the paper titled **"Efficiency of nonparametric two-sample superiority tests based on restricted mean survival time under proportional hazards."** The code includes simulations, case studies, and necessary functions for data analysis.
+This repository contains the code needed to reproduce all outputs presented in the paper titled **"Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time Under Proportional Hazards."** The repository includes simulations, case studies, and supporting functions for data analysis.
 
 ## Authors
 
-- Dominic Magirr (maintainer)
+- Dominic Magirr (Maintainer)
 - Craig Wang
 - Xinlei Deng
 - Mark Baillie
 
-## Repository Overview
+## Repository Structure
 
 The repository is organized into the following main directories:
 
 ### 1. `data/`
-- **CLEOPATRA_2a.rda**: Data from the CLEOPATRA trial.
-- **leader_km.csv**: Data for the leader case study.
-- **sustain_idp.csv**: Data for the sustain case study.
+This directory contains all datasets utilized in the analyses presented in the paper:
 
-This directory contains all the data sets used for the analyses in the paper.
+- **CLEOPATRA_2a.rda**: Data from the CLEOPATRA trial.
+- **leader_km.csv**: Data for the LEADER case study.
+- **sustain_idp.csv**: Data for the SUSTAIN case study.
+- **poplar.csv**: Data for the POPLAR case study.
 
 ### 2. `reproduce_results/`
-This directory includes code to reproduce all the results presented in the paper. It is subdivided into the following folders:
+This directory includes all the scripts required to reproduce the results in the paper. It contains the following subfolders:
 
-- **case_studies/**: Code to reproduce the case studies, including analyses of clinical trial data.
-- **simulation/**: Code to run the simulation studies discussed in the paper.
-- **weight_functions/**: Code related to different weight functions used in the paper's analysis.
+- **case_studies/**: Code for analyzing clinical trial data presented as case studies.
+- **simulation/**: Scripts to perform simulation studies discussed in the paper.
+- **weight_functions/**: Code for applying the weight functions used in the analyses.
 
 ### 3. `src/`
-This folder contains helper functions that are used throughout the analysis:
-- **sim_helper_fns.R**: Helper functions for simulations.
-- **survRM2_fns.R**: Functions for performing RMST calculations and related survival analysis.
+This folder includes helper functions used across various parts of the analysis:
 
-## Installation
+- **sim_helper_fns.R**: Contains helper functions for simulations.
+- **survRM2_fns.R**: Functions for calculating Restricted Mean Survival Time (RMST) and related survival analyses.
 
-To run the analysis, make sure you have R installed with the necessary packages. You can install the required packages by running the following script:
+## Installation and Setup
 
-```R
-source("install_packages.R")
+To run the analysis, you need to have R installed, along with the necessary R packages. You can install the required packages and run the main analysis by executing the provided script:
+
+```r
+source("00_install_required_packages.R")
 ```
 
-## How to Reproduce Results
+This script will install all the dependencies automatically.
 
-1. Clone the repository to your local machine.
+## Reproducing the Results
+
+To reproduce the results presented in the paper, follow these steps:
+
+1. Clone the repository to your local machine:
    
    ```bash
    git clone https://github.com/yourusername/ph-rmst-efficiency.git
    cd ph-rmst-efficiency
    ```
 
-2. Open R or RStudio and set your working directory to the repository:
+2. Install the required R packages by running the following command within your R session:
 
-   ```R
-   setwd("path_to_repository")
+   ```r
+   source("00_install_required_packages.R")
    ```
 
-3. Load the required data:
+3. Run the main script to generate all figures and results. Note that for full simulation studies, you will need to toggle the relevant simulation flag:
 
-   ```R
-   load("data/CLEOPATRA_2a.rda")
+   ```r
+   source("01_generate_figures.R")
    ```
 
-4. Run the following scripts to reproduce specific sections:
-   - **Case Studies**: 
-     ```R
-     source("reproduce_results/case_studies/run_case_studies.R")
-     ```
-   - **Simulation**: 
-     ```R
-     source("reproduce_results/simulation/run_simulations.R")
-     ```
-   - **Weight Functions**: 
-     ```R
-     source("reproduce_results/weight_functions/run_weight_functions.R")
-     ```
+   The script includes both figure generation and case study analyses. Make sure to configure the settings as needed before running simulations, as these can be computationally intensive.
 
 ## Citation
 
-Please cite the following paper when using this code:
+If you use this code or data in your research, please cite the following paper:
 
-> Magirr, D., Wang, C., Deng, X., & Baillie, M. (2024). "Efficiency of nonparametric two-sample superiority tests based on restricted mean survival time under proportional hazards." *TBC*.
+> Magirr, D., Wang, C., Deng, X., & Baillie, M. (2024). *Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time Under Proportional Hazards.* (Journal To Be Confirmed).
+
+## Notes and Considerations
+
+- **Computational Requirements**: Some scripts, particularly the simulation scripts, may require significant computational resources. We recommend running these scripts on a machine with adequate memory and processing power.
+
+
+## Contact
+
+For questions or issues related to this repository, please contact the maintainer.
 
