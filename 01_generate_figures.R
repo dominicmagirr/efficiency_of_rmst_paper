@@ -94,3 +94,11 @@ source("reproduce_results/case_studies/plot_hr_case_studies.R")
 # Generate case study standardised score plots
 #-------------------------------------------------------------
 source("reproduce_results/case_studies/plot_std_scores_case_studies.R")
+
+#-------------------------------------------------------------
+# Generate appendix plots - case study 
+#-------------------------------------------------------------
+source("reproduce_results/appendix/plot_appendix_case_studies.R")
+
+
+
