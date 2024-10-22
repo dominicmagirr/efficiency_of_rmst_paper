@@ -1,19 +1,32 @@
 library(survival)
-library(flexsurv)
-library(ggsurvfit)
-source("src/survRM2_fns.R")
+library(flexsurv, lib.loc = "local_lib") # Load the specific version of flexsurv
+library(readr)
+
+# A - sustain study 
 
 dat <- read.csv("data/sustain_ipd.csv")
 dat$arm <- factor(ifelse(dat$arm == 1, "control", "experimental"))
 
-## plot
 
+## assess ph
 fit_spline <- flexsurvspline(Surv(time, event) ~ arm +
                                gamma1(arm) +
                                gamma2(arm),
                              data = dat, k = 4, scale = "hazard")
 
+# Step 1: Call the pdf command to start the plot
+pdf(file = "figs/appendix_sustain.pdf",   # The directory you want to save the file in
+    width = 12, # The width of the plot in inches
+    height = 10) # The height of the plot in inches
+
+# Step 2: Create the plots with R code
+
 par(mfrow = c(2,2))
+plot(fit_spline, type = "survival", ci = FALSE, col = c(2,4), ylim = c(0.9, 1), xlab = "Time", ylab = "Survival", main = "(A)")
+legend("bottomleft", c("Control","Experimental"), col = c(2,4), lty = c(1,1))
+plot(fit_spline, type = "cumhaz", ci = TRUE, col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(B)")
+plot(fit_spline, type = "cumhaz", log = "xy", xlim = c(10, 109), col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(C)")
+
 
 ## conf int for hazard ratio
 ## simulate from MVN distribution
@@ -48,28 +61,45 @@ for (i in 1:109){
 }
 
 plot(1:109, res_mat[,2], type = "l", ylim = c(0.3,1.5), xlim = c(5, 109),
-     xlab = "Time", ylab = "Hazard Ratio", main = "(A)")
+     xlab = "Time", ylab = "Hazard Ratio", main = "(D)")
 points(1:109, res_mat[,1],type = "l", lty = 2)
 points(1:109, res_mat[,3],type = "l", lty = 2)
 abline(h = 0.7373, col = 1, lty = 3)
 
-###################################################################
+# Step 3: Run dev.off() to create the file!
+dev.off()
 
-###########################
+# 2 cleopatra study 
+
 load("data/CLEOPATRA_2A.rda")
 dat <- CLEOPATRA_2A
-
-
-
+survfit(Surv(time, event) ~ arm, data = dat) |> plot(col=1:2)
 dat$arm <- factor(ifelse(dat$arm == "control", "control", "experimental"))
 
-## plot
+
+## assess ph
 
 fit_spline <- flexsurvspline(Surv(time, event) ~ arm +
                                gamma1(arm) +
                                gamma2(arm),
                              data = dat, k = 4, scale = "hazard")
 
+# Step 1: Call the pdf command to start the plot
+pdf(file = "figs/appendix_cleopatra.pdf",   # The directory you want to save the file in
+    width = 12, # The width of the plot in inches
+    height = 10) # The height of the plot in inches
+
+# Step 2: Create the plots with R code
+
+
+par(mfrow = c(2,2))
+plot(fit_spline, type = "survival", ci = FALSE, col = c(2,4), ylim = c(0, 1), xlab = "Time", ylab = "Survival", main = "(A)")
+legend("bottomleft", c("Control", "Experimental"), col = c(2,4), lty = c(1,1))
+plot(fit_spline, type = "cumhaz", ci = TRUE, col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(B)")
+plot(fit_spline, type = "cumhaz", log = "xy", col = c(2,4), xlim = c(5, 70), xlab = "Time", ylab = "Cumulative Hazard", main = "(C)")
+
+## conf int for hazard ratio
+## simulate from MVN distribution
 sims <- normboot.flexsurvreg(fit_spline, 
                              B = 1e5, 
                              raw = TRUE)
@@ -101,25 +131,41 @@ for (i in 1:70){
 }
 
 plot(1:70, res_mat[,2], type = "l", ylim = c(0.3,1.5), xlim = c(5, 70),
-     xlab = "Time", ylab = "Hazard Ratio", main = "(B)")
+     xlab = "Time", ylab = "Hazard Ratio", main = "(D)")
 points(1:70, res_mat[,1],type = "l", lty = 2)
 points(1:70, res_mat[,3],type = "l", lty = 2)
 
+# Step 3: Run dev.off() to create the file!
+dev.off()
 
-abline(h = 0.6767, col = 1, lty = 3)
 
-#############################################
-library(survival)
-source("src/survRM2_fns.R")
+#3 - leader study 
 dat <- read.csv("data/leader_km.csv")
-
 dat$arm <- factor(ifelse(dat$arm == 1, "control", "experimental"))
 
+
+## assess ph
 
 fit_spline <- flexsurvspline(Surv(time, event) ~ arm +
                                gamma1(arm) +
                                gamma2(arm),
                              data = dat, k = 4, scale = "hazard")
+
+
+# Step 1: Call the pdf command to start the plot
+pdf(file = "figs/appendix_leader.pdf",   # The directory you want to save the file in
+    width = 12, # The width of the plot in inches
+    height = 10) # The height of the plot in inches
+
+# Step 2: Create the plots with R code
+
+par(mfrow = c(2,2))
+plot(fit_spline, type = "survival", ci = FALSE, col = c(2,4), ylim = c(0.8, 1), xlab = "Time", ylab = "Survival", main = "(A)")
+legend("bottomleft", c("Control", "Experimental"), col = c(2,4), lty = c(1,1))
+plot(fit_spline, type = "cumhaz", ci = TRUE, col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(B)")
+plot(fit_spline, type = "cumhaz", log = "xy", xlim = c(5, 50), col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(C)")
+
+## conf int for hazard ratio
 ## simulate from MVN distribution
 sims <- normboot.flexsurvreg(fit_spline, 
                              B = 1e5, 
@@ -151,35 +197,49 @@ for (i in 1:50){
   res_mat[i,] <- quantile(hr, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
 }
 
+
+
 plot(1:50, res_mat[,2], type = "l", ylim = c(0.5,1.2), xlim = c(1, 50),
-     xlab = "Time", ylab = "Hazard Ratio", main = "(C)")
+     xlab = "Time", ylab = "Hazard Ratio", main = "(D)")
 points(1:50, res_mat[,1],type = "l", lty = 2)
 points(1:50, res_mat[,3],type = "l", lty = 2)
 abline(h = 0.869, col = 1, lty = 3)
 
-#####################################
+# Step 3: Run dev.off() to create the file!
+dev.off()
 
-### get and plot data
-library(dplyr)
-template <- tempfile(fileext = ".xlsx")
 
-httr::GET(url = "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-018-0134-3/MediaObjects/41591_2018_134_MOESM3_ESM.xlsx", 
-          httr::write_disk(template))
 
-dat <- readxl::read_excel(template,sheet = 2) %>% 
-  select(PtID, ECOGGR, OS, OS.CNSR, TRT01P) %>%
-  mutate(event = -1 * (OS.CNSR - 1),
-         time = OS,
-         arm = factor(ifelse(TRT01P == "Docetaxel", "control", "experimental"))) %>% 
-  select(time, event, arm) %>%
-  as.data.frame()
+### 4 - poplar study
 
+# load data
+dat <- read_csv("data/poplar.csv")
+
+
+## assess ph
 
 fit_spline <- flexsurvspline(Surv(time, event) ~ arm +
                                gamma1(arm) +
                                gamma2(arm),
                              data = dat, k = 4, scale = "hazard")
-# conf int for hazard ratio
+
+
+# Step 1: Call the pdf command to start the plot
+pdf(file = "figs/appendix_poplar.pdf",   # The directory you want to save the file in
+    width = 12, # The width of the plot in inches
+    height = 10) # The height of the plot in inches
+
+# Step 2: Create the plots with R code
+
+
+par(mfrow = c(2,2))
+plot(fit_spline, type = "survival", ci = FALSE, col = c(2,4), ylim = c(0, 1), xlab = "Time", ylab = "Survival", main = "(A)")
+legend("bottomleft", c("Control", "Experimental"), col = c(2,4), lty = c(1,1))
+plot(fit_spline, type = "cumhaz", ci = TRUE, col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(B)")
+plot(fit_spline, type = "cumhaz", log = "xy", xlim = c(1, 30), col = c(2,4), xlab = "Time", ylab = "Cumulative Hazard", main = "(C)")
+
+
+## conf int for hazard ratio
 ## simulate from MVN distribution
 sims <- normboot.flexsurvreg(fit_spline, 
                              B = 1e5, 
@@ -218,7 +278,7 @@ points(1:30, res_mat[,3],type = "l", lty = 2)
 abline(h = 0.6752, col = 1, lty = 3)
 
 
-## plot
-
+# Step 3: Run dev.off() to create the file!
+dev.off()
 
 
