@@ -185,7 +185,9 @@ one_sim_zs <- function(n_per_arm,
   z_rmst <- rmst_est / rmst_se
   
   res_cox <- coxph(Surv(time, event) ~ treat, data = dat)
-  z_cox <- summary(res_cox)$coef[,"z"]
+  sum_cox <- summary(res_cox)
+  wald_cox_z <- sum_cox$coef[,"z"]
+  z_cox <- sqrt(sum_cox$sctest["test"]) * ifelse(wald_cox_z < 0, -1, 1)
   
   return(data.frame(z_rmst = z_rmst,
                     z_cox = z_cox,
