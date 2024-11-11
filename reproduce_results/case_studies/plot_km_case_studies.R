@@ -16,10 +16,10 @@ p_1 <- survfit2(Surv(time, event) ~ arm, data = sustain_data) |>
   ggsurvfit() +
   add_censor_mark() +
   add_confidence_interval() +
-  add_quantile() +
   add_risktable() +
   theme(legend.position = c(0.2, 0.2)) +
-  ggtitle("(A)") 
+  ggtitle("(A) SUSTAIN-6") +
+  geom_vline(xintercept = 108, linetype = 2)
 
   
 
@@ -35,9 +35,10 @@ p_2 <- survfit2(Surv(time, event) ~ arm, data = cleopatra_data) |>
   ggsurvfit() +
   add_censor_mark() +
   add_confidence_interval() +
-  add_quantile() +
   add_risktable() + 
-  theme(legend.position = "none")  + ggtitle("(B)")
+  theme(legend.position = "none")  + 
+  ggtitle("(B) CLEOPATRA") +
+  geom_vline(xintercept = 65, linetype = 2)
 
 #-----------------------------------------------------------
 # LEADER dataset
@@ -50,9 +51,11 @@ p_3 <- survfit2(Surv(time, event) ~ arm, data = leader_data) |>
   ggsurvfit() +
   add_censor_mark() +
   add_confidence_interval() +
-  add_quantile() +
   add_risktable() +
-  theme(legend.position = "none")  + ggtitle("(C)")
+  theme(legend.position = "none")  +
+  ggtitle("(C) LEADER") +
+  geom_vline(xintercept = 48, linetype = 2)
+
 
 #-----------------------------------------------------------
 # POPLAR dataset
@@ -64,8 +67,11 @@ p_4 <- survfit2(Surv(time, event) ~ arm, data = poplar_data) |>
   ggsurvfit() +
   add_censor_mark() +
   add_confidence_interval() +
-  add_quantile() +
-  add_risktable() + theme(legend.position = "none")  + ggtitle("(D)")
+  add_risktable() + 
+  theme(legend.position = "none")  + 
+  ggtitle("(D) POPLAR")+
+  geom_vline(xintercept = 24, linetype = 2)
+
 
 #-----------------------------------------------------------
 # Combine plots into a single figure

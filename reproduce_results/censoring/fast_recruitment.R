@@ -58,7 +58,7 @@ p_2 <- ggplot() +
   theme_classic() +
   theme(plot.title = element_text(hjust = 0.5)) +
   xlab("Patient time") +
-  ylab("P(Censored)") + 
+  ylab("1 - P(Censored)") + 
   ggtitle("Light censoring") + 
   geom_ribbon(data = dat_ribbon,
               mapping = aes(x = x,

@@ -22,7 +22,7 @@ set.seed(random_seed)    # Set seed
 global_params <- list(
   event_rates = c("Low" = 0.9, "Moderate" = 0.6, "High" = 0.2),
   recruitment_speeds = c("Instant" = 0.0001, "Fast" = 0.5, "Moderate" = 1.5, "Slow" = 2.5),
-  max_t = c(3.001, 4.5),
+  max_t = c(3.000, 3.5),
   sample_sizes = c("Low" = 1000, "Moderate" = 250, "High" = 150)
 )
 
@@ -45,7 +45,8 @@ post_sim <- function(res){
   return(data.frame(pow_rmst = pow_rmst,
                     pow_ph = pow_ph,
                     eff_rmst_cox = eff_rmst_cox,
-                    frac_post_tau = frac_post_tau))
+                    frac_post_tau = frac_post_tau,
+                    mean_tau = mean(res$tau)))
 }
 
 # Wrapper function to run a single simulation scenario 
@@ -126,4 +127,4 @@ if (!dir.exists(results_folder)) {
 
 # Save the final results with metadata 
 file_name <- sprintf("%s/simulation_results.csv", results_folder)
-write_csv(final_results, file_name)
+readr::write_csv(final_results, file_name)

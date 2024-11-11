@@ -13,10 +13,13 @@ post_sim <- function(res){
   
   frac_post_tau <- mean(res$n_events_tau / res$n_events)
   
+  mean_tau <- mean(res$tau)
+  
   return(data.frame(pow_rmst = pow_rmst |> round(2),
                     pow_ph = pow_ph|> round(2),
                     eff_rmst_cox = eff_rmst_cox|> round(2),
-                    frac_post_tau = frac_post_tau |> round(2)))
+                    frac_post_tau = frac_post_tau |> round(2),
+                    mean_tau = mean_tau |> round(2)))
 }
 
 
@@ -53,11 +56,11 @@ set.seed(32624)
 ## option to use clustermq or not...
 
 #res_low_instant <- purrr::map_df(rep(1000, 1e4), one_sim_zs, s_0 = exp(log(0.9) * 1.5), rec_period = 0.0001, max_t = 3.001)
-res_low_instant <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 0.0001, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_low_instant <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 0.0001, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_mod_instant <- purrr::map_df(rep(250, 1e4), one_sim_zs, s_0 = exp(log(0.6) * 1.5), rec_period = 0.0001, max_t = 3.001)
-res_mod_instant <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 0.0001, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_mod_instant <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 0.0001, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_high_instant <- purrr::map_df(rep(150, 1e4), one_sim_zs, s_0 = exp(log(0.2) * 1.5), rec_period = 0.0001, max_t = 3.001)
-res_high_instant <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 0.0001, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_high_instant <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 0.0001, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 
 ##---------------------------------------------------------------------------------------
 
@@ -69,11 +72,11 @@ post_sim(res_high_instant)
 ##-----------------------------   Fast recruitment --------------------------------------------
 
 #res_low_fast <- purrr::map_df(rep(1000, 1e4), one_sim_zs, s_0 = exp(log(0.9) * 1.5), rec_period = 0.5, max_t = 3.001)
-res_low_fast <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 0.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_low_fast <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 0.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_mod_fast <- purrr::map_df(rep(250, 1e4), one_sim_zs, s_0 = exp(log(0.6) * 1.5), rec_period = 0.5, max_t = 3.001)
-res_mod_fast <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 0.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_mod_fast <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 0.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_high_fast <- purrr::map_df(rep(150, 1e4), one_sim_zs, s_0 = exp(log(0.2) * 1.5), rec_period = 0.5, max_t = 3.001)
-res_high_fast <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 0.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_high_fast <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 0.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 
 ##---------------------------------------------------------------------------------------
 
@@ -83,11 +86,11 @@ post_sim(res_high_fast)
 ##------------------------------------ Moderate recruitment ---------------------------------------------------
 
 #res_low_mod <- purrr::map_df(rep(1000, 1e4), one_sim_zs, s_0 = exp(log(0.9) * 1.5), rec_period = 1.5, max_t = 3.001)
-res_low_mod <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 1.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_low_mod <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 1.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_mod_mod <- purrr::map_df(rep(250, 1e4), one_sim_zs, s_0 = exp(log(0.6) * 1.5), rec_period = 1.5, max_t = 3.001)
-res_mod_mod <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 1.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_mod_mod <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 1.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_high_mod <- purrr::map_df(rep(150, 1e4), one_sim_zs, s_0 = exp(log(0.2) * 1.5), rec_period = 1.5, max_t = 3.001)
-res_high_mod <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 1.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_high_mod <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 1.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 
 ##---------------------------------------------------------------------------------------
 
@@ -99,11 +102,11 @@ post_sim(res_high_mod)
 ##------------------------------------ Slow recruitment ---------------------------------------------------
 
 #res_low_slow <- purrr::map_df(rep(1000, 1e4), one_sim_zs, s_0 = exp(log(0.9) * 1.5), rec_period = 2.5, max_t = 3.001)
-res_low_slow <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 2.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_low_slow <- Q(run_sim_wrapper, n_per_arm=rep(1000, N_runs),const = list(s_0 = exp(log(0.9)*1.5), rec_period = 2.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_mod_slow <- purrr::map_df(rep(250, 1e4), one_sim_zs, s_0 = exp(log(0.6) * 1.5), rec_period = 2.5, max_t = 3.001)
-res_mod_slow <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 2.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_mod_slow <- Q(run_sim_wrapper, n_per_arm=rep(250, N_runs),const = list(s_0 = exp(log(0.6)*1.5), rec_period = 2.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 #res_high_slow <- purrr::map_df(rep(150, 1e4), one_sim_zs, s_0 = exp(log(0.2) * 1.5), rec_period = 2.5, max_t = 3.001)
-res_high_slow <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 2.5, max_t = 3.001), n_jobs = 200) |> do.call(what = rbind)
+res_high_slow <- Q(run_sim_wrapper, n_per_arm=rep(150, N_runs),const = list(s_0 = exp(log(0.2)*1.5), rec_period = 2.5, max_t = 3.000), n_jobs = 200) |> do.call(what = rbind)
 
 ##---------------------------------------------------------------------------------------
 
