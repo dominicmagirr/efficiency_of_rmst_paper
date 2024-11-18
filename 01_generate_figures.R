@@ -3,6 +3,13 @@
 #--------------------------------------------------
 
 #-------------------------------------------------------------
+# Create recruitment and censoring figure 
+#-------------------------------------------------------------
+source("reproduce_results/censoring/slow_recruitment.R")
+source("reproduce_results/censoring/fast_recruitment.R")
+source("reproduce_results/censoring/joint_plot.R")
+
+#-------------------------------------------------------------
 # Create RMST and PH weight function figure 
 #-------------------------------------------------------------
 source("reproduce_results/weight_functions/plot_weight_functions.R")

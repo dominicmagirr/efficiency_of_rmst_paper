@@ -85,9 +85,8 @@ dat1 <- read.csv("data/sustain_ipd.csv")
 dat1$arm <- factor(ifelse(dat1$arm == 1, "control", "experimental"))
 plot1 <- fit_and_plot(dat1, 1:109, "(A)", c(0.3, 1.5), c(5, 109), 0.7373)
 
-# Dataset 2: CLEOPATRA_2A.rda
-load("data/CLEOPATRA_2A.rda")
-dat2 <- CLEOPATRA_2A
+# Dataset 2: CLEOPATRA_2A.csv
+dat2 <- read.csv("data/CLEOPATRA_2A.csv")
 dat2$arm <- factor(ifelse(dat2$arm == "control", "control", "experimental"))
 plot2 <- fit_and_plot(dat2, 1:70, "(B)", c(0.3, 1.5), c(5, 70), 0.6767)
 
