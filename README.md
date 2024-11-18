@@ -76,7 +76,7 @@ To reproduce the results presented in the paper, follow these steps:
 
 If you use this code or data in your research, please cite the following paper:
 
-> Magirr, D., Wang, C., Deng, X., & Baillie, M. (2024). *Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time versus The Log-Rank Test Under Proportional Hazards.* (Journal To Be Confirmed).
+> Magirr, D., Wang, C., Deng, X., Morris, T., & Baillie, M. (2024). *Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time versus The Log-Rank Test Under Proportional Hazards.* (Journal To Be Confirmed).
 
 ## Notes and Considerations
 
