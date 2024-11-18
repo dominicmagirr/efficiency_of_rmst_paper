@@ -15,8 +15,7 @@ library(gt)
 data_sustain <- read.csv("data/sustain_ipd.csv")
 
 # Example B - Cleopatra Study
-load("data/CLEOPATRA_2A.rda")
-data_cleopatra <- CLEOPATRA_2A
+data_cleopatra <- read.csv("data/CLEOPATRA_2A.csv")
 
 # Example C - Leader Study
 data_leader <- read.csv("data/leader_km.csv")

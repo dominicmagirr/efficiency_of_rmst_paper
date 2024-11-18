@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the code needed to reproduce all outputs presented in the paper titled **"Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time Under Proportional Hazards."** The repository includes simulations, case studies, and supporting functions for data analysis.
+This repository contains the code needed to reproduce all outputs presented in the paper titled **"Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time versus The Log-Rank Test Under Proportional Hazards."** The repository includes simulations, case studies, and supporting functions for data analysis.
 
 ## Authors
 
@@ -27,6 +27,7 @@ This directory contains all datasets utilized in the analyses presented in the p
 This directory includes all the scripts required to reproduce the results in the paper. It contains the following subfolders:
 
 - **case_studies/**: Code for analyzing clinical trial data presented as case studies.
+- **censoring/**: Code for illustrating the recruitment rate and censoring distributions.
 - **simulation/**: Scripts to perform simulation studies discussed in the paper.
 - **weight_functions/**: Code for applying the weight functions used in the analyses.
 
@@ -75,7 +76,7 @@ To reproduce the results presented in the paper, follow these steps:
 
 If you use this code or data in your research, please cite the following paper:
 
-> Magirr, D., Wang, C., Deng, X., & Baillie, M. (2024). *Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time Under Proportional Hazards.* (Journal To Be Confirmed).
+> Magirr, D., Wang, C., Deng, X., & Baillie, M. (2024). *Efficiency of Nonparametric Two-Sample Superiority Tests Based on Restricted Mean Survival Time versus The Log-Rank Test Under Proportional Hazards.* (Journal To Be Confirmed).
 
 ## Notes and Considerations
 

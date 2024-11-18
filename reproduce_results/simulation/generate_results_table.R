@@ -13,7 +13,7 @@ final_results_wide <- final_results |>
     id_cols = c(event_rate, recruitment_speed),
     names_from = max_t,
     values_from = c(pow_rmst, pow_ph, eff_rmst_cox, frac_post_tau),
-    names_glue = "{.value}{ifelse(max_t == 4.5, '_plus', '')}"
+    names_glue = "{.value}{ifelse(max_t == 3.5, '_plus', '')}"
   )
 
 

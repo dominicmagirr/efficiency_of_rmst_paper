@@ -26,8 +26,7 @@ p_1 <- survfit2(Surv(time, event) ~ arm, data = sustain_data) |>
 #-----------------------------------------------------------
 # CLEOPATRA dataset
 #-----------------------------------------------------------
-load("data/CLEOPATRA_2A.rda")
-cleopatra_data <- CLEOPATRA_2A |> 
+cleopatra_data <- read.csv("data/CLEOPATRA_2A.csv") |> 
   mutate(arm = factor(ifelse(arm == "control", "control", "experimental")))
 
 # Plot CLEOPATRA data
