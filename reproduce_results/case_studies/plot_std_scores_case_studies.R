@@ -42,10 +42,10 @@ process_data <- function(data, tau, example_label) {
 
 # List of data files with corresponding tau values and labels to be used in the analysis
 data_files <- list(
-  list(file = "data/sustain_ipd.csv", tau = 108, label = "(A)"),
-  list(file = "data/CLEOPATRA_2A.csv", tau = 65, label = "(B)"),
-  list(file = "data/leader_km.csv", tau = 48, label = "(C)"),
-  list(file = "data/poplar.csv", tau = 24, label = "(D)")
+  list(file = "data/sustain_ipd.csv", tau = 108, label = "(A) SUSTAIN-6"),
+  list(file = "data/CLEOPATRA_2A.csv", tau = 65, label = "(B) CLEOPATRA"),
+  list(file = "data/leader_km.csv", tau = 48, label = "(C) LEADER"),
+  list(file = "data/poplar.csv", tau = 24, label = "(D) POPLAR")
 )
 
 # Initialize combined dataset

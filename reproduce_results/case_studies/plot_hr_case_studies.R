@@ -42,8 +42,7 @@ fit_and_plot <- function(data,
     h_c <- hsurvspline(i, gamma = sims[, c("gamma0", "gamma1", "gamma2", "gamma3", "gamma4", "gamma5")], knots = fit_spline$knots)
     h_e <- hsurvspline(
       i,
-      gamma = cbind(sims[, "gamma0"], sims[, "gamma1"] + sims[, "gamma1(armexperimental)"], sims[, "gamma2"] + sims[, "gamma2(armexperimental)"], sims[, "gamma3"], sims[, "gamma4"], sims[, "gamma5"]),
-      offset = sims[, "armexperimental"],
+      gamma = cbind(sims[, "gamma0"] + sims[, "armexperimental"], sims[, "gamma1"] + sims[, "gamma1(armexperimental)"], sims[, "gamma2"] + sims[, "gamma2(armexperimental)"], sims[, "gamma3"], sims[, "gamma4"], sims[, "gamma5"]),
       knots = fit_spline$knots
     )
     hr <- h_e / h_c
@@ -65,10 +64,10 @@ fit_and_plot <- function(data,
                 alpha = 0.2,
                 fill = "red") +
     geom_hline(
-      yintercept = 1,
-      linetype = "solid",
-      color = "grey",
-      alpha = 0.6
+      yintercept = abline_value,
+      linetype = "dashed",
+      color = "black",
+      alpha = 0.8
     ) +
     labs(title = plot_title, x = "Time", y = "Hazard Ratio") +
     theme_minimal() +
@@ -83,21 +82,21 @@ fit_and_plot <- function(data,
 # Dataset 1: sustain_ipd.csv
 dat1 <- read.csv("data/sustain_ipd.csv")
 dat1$arm <- factor(ifelse(dat1$arm == 1, "control", "experimental"))
-plot1 <- fit_and_plot(dat1, 1:109, "(A)", c(0.3, 1.5), c(5, 109), 0.7373)
+plot1 <- fit_and_plot(dat1, 1:109, "(A) SUSTAIN-6", c(0.3, 1.5), c(5, 109), 0.7373)
 
 # Dataset 2: CLEOPATRA_2A.csv
 dat2 <- read.csv("data/CLEOPATRA_2A.csv")
 dat2$arm <- factor(ifelse(dat2$arm == "control", "control", "experimental"))
-plot2 <- fit_and_plot(dat2, 1:70, "(B)", c(0.3, 1.5), c(5, 70), 0.6767)
+plot2 <- fit_and_plot(dat2, 1:70, "(B) CLEOPATRA", c(0.3, 1.5), c(5, 70), 0.6767)
 
 # Dataset 3: leader_km.csv
 dat3 <- read.csv("data/leader_km.csv")
 dat3$arm <- factor(ifelse(dat3$arm == 1, "control", "experimental"))
-plot3 <- fit_and_plot(dat3, 1:50, "(C)", c(0.5, 1.2), c(1, 50), 0.869)
+plot3 <- fit_and_plot(dat3, 1:50, "(C) LEADER", c(0.5, 1.2), c(1, 50), 0.869)
 
 # Dataset 4: External Excel data
 dat4 <- read_csv("data/poplar.csv")
-plot4 <- fit_and_plot(dat4, 1:30, "(D)", c(0.1, 1.2), c(1, 30), 0.6752)
+plot4 <- fit_and_plot(dat4, 1:30, "(D) POPLAR", c(0.1, 1.2), c(1, 30), 0.6752)
 
 #-----------------------------------------------
 # Combine all four plots using patchwork

@@ -18,7 +18,7 @@ p_1 <- survfit2(Surv(time, event) ~ arm, data = sustain_data) |>
   add_confidence_interval() +
   add_risktable() +
   theme(legend.position = c(0.2, 0.2)) +
-  ggtitle("(A) SUSTAIN-6") +
+  ggtitle(expression("(A) SUSTAIN-6:"~Z^"Cox"==2.38*"; "~Z^"RMST"==2.22)) +
   geom_vline(xintercept = 108, linetype = 2)
 
   
@@ -36,7 +36,7 @@ p_2 <- survfit2(Surv(time, event) ~ arm, data = cleopatra_data) |>
   add_confidence_interval() +
   add_risktable() + 
   theme(legend.position = "none")  + 
-  ggtitle("(B) CLEOPATRA") +
+  ggtitle(expression("(B) CLEOPATRA:"~Z^"Cox"==3.77*"; "~Z^"RMST"==3.75)) +
   geom_vline(xintercept = 65, linetype = 2)
 
 #-----------------------------------------------------------
@@ -52,7 +52,7 @@ p_3 <- survfit2(Surv(time, event) ~ arm, data = leader_data) |>
   add_confidence_interval() +
   add_risktable() +
   theme(legend.position = "none")  +
-  ggtitle("(C) LEADER") +
+  ggtitle(expression("(C) LEADER:"~Z^"Cox"==2.53*"; "~Z^"RMST"==2.63)) +
   geom_vline(xintercept = 48, linetype = 2)
 
 
@@ -68,7 +68,7 @@ p_4 <- survfit2(Surv(time, event) ~ arm, data = poplar_data) |>
   add_confidence_interval() +
   add_risktable() + 
   theme(legend.position = "none")  + 
-  ggtitle("(D) POPLAR")+
+  ggtitle(expression("(D) POPLAR:"~Z^"Cox"==2.75*"; "~Z^"RMST"==2.24))+
   geom_vline(xintercept = 24, linetype = 2)
 
 
